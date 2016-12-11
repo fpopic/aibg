@@ -11,59 +11,61 @@ import java.util.List;
 
 public class RunGame {
 
-	final static Logger logger = Logger.getLogger(RunGame.class);
-	private static WebSocketObserver ws;
-	public static void main(String[] args) {
-		try {
-			JsonObject config = ConfigUtilities.configFromCMDArgs(args);
+    final static Logger logger = Logger.getLogger(RunGame.class);
+    private static WebSocketObserver ws;
 
-			final List<AbstractPlayer> players = ConfigUtilities
-					.istantiateAllPlayersFromConfig(config.getAsJsonArray("players"), config.get("port").getAsInt());
+    public static void main(String[] args) {
+        try {
+            JsonObject config = ConfigUtilities.configFromCMDArgs(args);
 
-			GameState initialState = (GameState) ConfigUtilities.genInitState(config);
+            final List<AbstractPlayer> players = ConfigUtilities
+                    .istantiateAllPlayersFromConfig(config.getAsJsonArray("players"), config.get("port").getAsInt());
 
-			try (GameContext gc = new GameContext(initialState, 2, 7)) {
-				players.forEach(gc::addPlayer);
+            GameState initialState = (GameState) ConfigUtilities.genInitState(config);
 
-				if (config.get("visualization").getAsBoolean()) {
-					ws = new WebSocketObserver(config.get("ws_port").getAsInt());
-					ws.start();
-					gc.addObserver(ws);
-					logger.info("Awaiting connection onto websocket");
-					while (ws.connections().size() == 0) {
-						Thread.sleep(100);
-					}
-					logger.info("Someone connected, can start game");
-				}
-				gc.play();
+            try (GameContext gc = new GameContext(initialState, 2, 7)) {
+                players.forEach(gc::addPlayer);
 
-				if (ws != null) {
-					ws.close();
-					ws.stop();
-				}
-			}
+                if (config.get("visualization").getAsBoolean()) {
+                    ws = new WebSocketObserver(config.get("ws_port").getAsInt());
+                    ws.start();
+                    gc.addObserver(ws);
+                    logger.info("Awaiting connection onto websocket");
+                    while (ws.connections().size() == 0) {
+                        Thread.sleep(100);
+                    }
+                    logger.info("Someone connected, can start game");
+                }
+                gc.play();
 
-		} catch (Exception ex) {
-			logger.error(ex);
-			ex.printStackTrace();
-		}
-		finally {
-			if (ConfigUtilities.socket != null) {
-				try {
-					ConfigUtilities.socket.close();
-				} catch (IOException ignorable) {
-				}
-			}
+                if (ws != null) {
+                    ws.close();
+                    ws.stop();
+                }
+            }
 
-			if (ws != null) {
-				try {
-					ws.close();
-				} catch (Exception ignorable) {}
-				try {
-					ws.stop();
-				} catch (Exception ignorable) {}
-			}
-		}
-	}
+        } catch (Exception ex) {
+            logger.error(ex);
+            ex.printStackTrace();
+        } finally {
+            if (ConfigUtilities.socket != null) {
+                try {
+                    ConfigUtilities.socket.close();
+                } catch (IOException ignorable) {
+                }
+            }
+
+            if (ws != null) {
+                try {
+                    ws.close();
+                } catch (Exception ignorable) {
+                }
+                try {
+                    ws.stop();
+                } catch (Exception ignorable) {
+                }
+            }
+        }
+    }
 
 }

@@ -1,7 +1,7 @@
 {
   "players": [
     {
-      "type": "myrandom",
+      "type": "chaser",
       "name": "p2-dummy",
       "agent": [
         {
@@ -20,13 +20,13 @@
       ]
     },
     {
-      "type": "random",
+      "type": "runner",
       "name": "p2-random",
       "agent": [
         {
           "alive": true,
           "object":{
-            "x":250,
+            "x":1250,
             "y":350,
             "vector":{
               "i":-2,
