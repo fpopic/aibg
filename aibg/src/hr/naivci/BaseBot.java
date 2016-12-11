@@ -26,8 +26,7 @@ public abstract class BaseBot extends AbstractPlayer {
         super(name);
     }
 
-    public void defineAgents(JsonObject state) {
-        GameState st = new Gson().fromJson(state, GameState.class);
+    public void defineAgents(GameState st) {
 
         Agent meCandidate = st.getAgents().get(0).get(0);
         if(meCandidate.getTeam() == myTeamNumber) {

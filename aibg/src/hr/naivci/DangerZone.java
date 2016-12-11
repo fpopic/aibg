@@ -9,15 +9,15 @@ import java.util.Map;
 
 public class DangerZone {
 
-    private final int scale;
-    private final int steps;
+    protected final int scale;
+    protected final int steps;
 
-    private final int width;
-    private final int height;
+    protected final int width;
+    protected final int height;
 
-    private GameState gameState;
+    protected GameState gameState;
 
-    private Map<String, Integer> values;
+    protected Map<String, Integer> values;
 
     public DangerZone(GameState gameState, int scale, int steps) {
         this.gameState = gameState;
@@ -29,7 +29,7 @@ public class DangerZone {
         calculateDangerZone();
     }
 
-    private void calculateDangerZone() {
+    protected void calculateDangerZone() {
         List<GameObject> asteroids = gameState.getAsteroids();
 
         for (GameObject asteroid : asteroids) {
@@ -72,7 +72,7 @@ public class DangerZone {
 
     }
 
-    String printValues() {
+    protected String printValues() {
         StringBuilder sb = new StringBuilder();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {

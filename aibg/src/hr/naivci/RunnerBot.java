@@ -9,9 +9,6 @@ import hr.best.ai.gl.AbstractPlayer;
 
 import java.util.List;
 
-/**
- * Created by vilimstubican on 11/12/16.
- */
 public class RunnerBot extends BaseBot {
 
     private Target target;
@@ -37,7 +34,7 @@ public class RunnerBot extends BaseBot {
         GameState st = new Gson().fromJson(state, GameState.class);
 //        Thread.sleep(30);
 
-        defineAgents(state);
+        defineAgents(st);
 
         this.opponent = opponentAgents.get(0);
         if(!opponent.isAlive()) {

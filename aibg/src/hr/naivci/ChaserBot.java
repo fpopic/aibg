@@ -15,6 +15,8 @@ public class ChaserBot extends BaseBot {
 
     private Target target;
 
+    private DangerZone dangerZone;
+
     public ChaserBot(String name) {
         super(name);
     }
@@ -30,9 +32,15 @@ public class ChaserBot extends BaseBot {
 
     @Override
     public JsonElement signalNewState(JsonObject state) throws Exception {
+        GameState st = new Gson().fromJson(state, GameState.class);
+
+        int scale = 10;
+        int steps = 10;
+//        dangerZone = new DangerZone(st, scale, steps);
+
 //        Thread.sleep(60);
 
-        defineAgents(state);
+        defineAgents(st);
 
         this.me = myAgents.get(0);
 
@@ -47,7 +55,12 @@ public class ChaserBot extends BaseBot {
     @Override
     public void defineOpponent(int position) {
         this.opponent = opponentAgents.get(Math.min(opponentAgents.size() - 1, position));
-        setTarget(new Target(opponent.getObject().getX(), opponent.getObject().getY()));
+
+        if(dangerZone != null) {
+
+        } else {
+            setTarget(new Target(opponent.getObject().getX(), opponent.getObject().getY()));
+        }
     }
 
     protected double calculateAcceleration() {
