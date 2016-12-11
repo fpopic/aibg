@@ -1,0 +1,102 @@
+{
+  "players": [
+    {
+      "type": "myrandom",
+      "name": "p2-dummy",
+      "agent": [
+        {
+          "alive": true,
+          "object":{
+            "x":400,
+            "y":120,
+            "vector":{
+              "i":2,
+              "j":0
+            },
+            "radius":24
+          },
+          "turnsUntilShooting":10
+        }
+      ]
+    },
+    {
+      "type": "random",
+      "name": "p2-random",
+      "agent": [
+        {
+          "alive": true,
+          "object":{
+            "x":250,
+            "y":350,
+            "vector":{
+              "i":-2,
+              "j":0
+            },
+            "radius":24},
+          "turnsUntilShooting":0
+        }
+      ]
+    }
+  ],
+  "asteroids":[
+    {
+      "x":450,
+      "y":750,
+      "vector":{
+        "i":-1,
+        "j":0
+      },
+      "radius":70
+    },
+    {
+      "x":50,
+      "y":50,
+      "vector":{
+        "i":3,
+        "j":0
+      },
+      "radius":30
+    },
+    {
+      "x":10,
+      "y":10,
+      "vector":{
+        "i":1,
+        "j":2
+      },
+      "radius":13
+    },
+    {
+      "x":30,
+      "y":160,
+      "vector":{
+        "i":1,
+        "j":2
+      },
+      "radius":20
+    },
+    {
+      "x":160,
+      "y":30,
+      "vector":{
+        "i":1,
+        "j":0.5
+      },
+      "radius":20
+    }
+  ],
+  "bullets":[],
+  "game": {
+    "width": 1920,
+    "height": 1080,
+    "rotationLimit": 0.2,
+    "speedLimit": 5,
+    "accelerationLimit": 0.5,
+    "bulletSpeed": 7,
+    "bulletRadius": 4,
+    "fireRate": 40
+  },
+  "port": 5858,
+  "ws_port":8080,
+  "visualization": true
+}

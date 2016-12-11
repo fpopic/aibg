@@ -5,7 +5,6 @@ import hr.best.ai.asteroids.Agent;
 import hr.best.ai.asteroids.GameObject;
 import hr.best.ai.asteroids.GameState;
 import hr.best.ai.asteroids.Parameters;
-
 import hr.best.ai.asteroids.bot.RandomBot;
 import hr.best.ai.gl.AbstractPlayer;
 import hr.best.ai.gl.GameContext;
@@ -13,6 +12,7 @@ import hr.best.ai.gl.State;
 import hr.best.ai.server.ProcessIOPlayer;
 import hr.best.ai.server.SocketIOPlayer;
 import hr.best.ai.server.TimeBucketPlayer;
+import hr.naivci.MyRandomBot;
 import org.apache.log4j.Logger;
 
 import java.io.FileNotFoundException;
@@ -43,6 +43,9 @@ public class ConfigUtilities {
 		switch (type) {
 		case "random":
 			player = new RandomBot(name);
+			break;
+		case "myrandom":
+			player = new MyRandomBot(name);
 			break;
 		case "tcp":
 			socket = socket != null ? socket : new ServerSocket(port, 50, null);
