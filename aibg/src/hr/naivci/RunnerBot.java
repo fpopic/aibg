@@ -3,11 +3,10 @@ package hr.naivci;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.sun.xml.internal.rngom.parse.host.Base;
-import hr.best.ai.asteroids.*;
-import hr.best.ai.gl.AbstractPlayer;
-
-import java.util.List;
+import hr.best.ai.asteroids.Agent;
+import hr.best.ai.asteroids.GameObject;
+import hr.best.ai.asteroids.GameState;
+import hr.best.ai.asteroids.PlayerAction;
 
 public class RunnerBot extends BaseBot {
 

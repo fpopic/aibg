@@ -1,8 +1,8 @@
 {
   "players": [
     {
-      "type": "chaser",
-      "name": "p2-dummy",
+      "type": "danger",
+      "name": "danger-bot",
       "timer":{
         "maxLength":60
       },
