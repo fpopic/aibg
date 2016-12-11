@@ -6,14 +6,14 @@ import com.google.gson.JsonObject;
 import hr.best.ai.asteroids.*;
 import hr.best.ai.gl.AbstractPlayer;
 
+import java.util.List;
+
 /**
  * Created by vilimstubican on 11/12/16.
  */
-public class ChaserBot extends AbstractPlayer {
+public class ChaserBot extends BaseBot {
 
     private Target target;
-    private Agent me;
-    private Agent opponent;
 
     public ChaserBot(String name) {
         super(name);
@@ -30,52 +30,42 @@ public class ChaserBot extends AbstractPlayer {
 
     @Override
     public JsonElement signalNewState(JsonObject state) throws Exception {
-        GameState st = new Gson().fromJson(state, GameState.class);
-        Thread.sleep(60);
+//        Thread.sleep(60);
 
-        // My player sizes
-        int cnt = st.getAgents().get(0).size();
-        boolean shooting = calculateShooting();
-        double rotation = calculateRotation();
-        double acceleration = calculateAcceleration();
+        defineAgents(state);
 
-        this.me = st.getAgents().get(0).get(0);
-        this.opponent = st.getAgents().get(1).get(0);
-
-        setTarget(new Target(opponent.getObject().getX(), opponent.getObject().getY()));
+        this.me = myAgents.get(0);
 
         PlayerAction act = new PlayerAction();
-        for (int i = 0; i < cnt; ++i) {
-            act.add(new BotAction(shooting, rotation, acceleration));
-        }
+
+        defineActions(act);
 
         JsonElement sol = new Gson().toJsonTree(act);
         return sol;
+    }
+
+    @Override
+    public void defineOpponent(int position) {
+        this.opponent = opponentAgents.get(Math.min(opponentAgents.size() - 1, position));
+        setTarget(new Target(opponent.getObject().getX(), opponent.getObject().getY()));
     }
 
     protected double calculateAcceleration() {
 
         if (me != null) {
             if (target != null) {
-                return 0.5;
+
+                if(me.getObject().getSpeed() > 2) {
+                    return -0.5;
+                }
+
+                if(me.getObject().getSpeed() < 1 ) {
+                    return 0.1;
+                }
             }
         }
 
         return 0.0;
-    }
-
-    protected boolean isStill(double curX, double curY) {
-        double targetX = target.x;
-        double targetY = target.y;
-
-        double diffX = curX - targetX;
-        double diffY = curY - targetY;
-
-        if (diffX * diffX + diffY + diffY < 200) {
-            return true;
-        }
-
-        return false;
     }
 
     protected double calculateRotation() {
@@ -119,10 +109,10 @@ public class ChaserBot extends AbstractPlayer {
 
 
     class Target {
-        public double x;
-        public double y;
+        double x;
+        double y;
 
-        public Target(double x, double y) {
+        Target(double x, double y) {
             this.x = x;
             this.y = y;
         }

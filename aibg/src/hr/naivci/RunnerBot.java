@@ -3,13 +3,16 @@ package hr.naivci;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.sun.xml.internal.rngom.parse.host.Base;
 import hr.best.ai.asteroids.*;
 import hr.best.ai.gl.AbstractPlayer;
+
+import java.util.List;
 
 /**
  * Created by vilimstubican on 11/12/16.
  */
-public class RunnerBot extends AbstractPlayer {
+public class RunnerBot extends BaseBot {
 
     private Target target;
     private Agent me;
@@ -17,7 +20,7 @@ public class RunnerBot extends AbstractPlayer {
 
     public RunnerBot(String name) {
         super(name);
-        this.setTarget(new Target(1800.0, 1000.0));
+        this.setTarget(new Target(1700.0, 900.0));
     }
 
     @Override
@@ -32,21 +35,18 @@ public class RunnerBot extends AbstractPlayer {
     @Override
     public JsonElement signalNewState(JsonObject state) throws Exception {
         GameState st = new Gson().fromJson(state, GameState.class);
-        Thread.sleep(60);
+//        Thread.sleep(30);
 
-        // My player sizes
-        int cnt = st.getAgents().get(0).size();
-        boolean shooting = calculateShooting();
-        double rotation = calculateRotation();
-        double acceleration = calculateAcceleration();
+        defineAgents(state);
 
-        this.me = st.getAgents().get(0).get(0);
-        this.opponent = st.getAgents().get(1).get(0);
+        this.opponent = opponentAgents.get(0);
+        if(!opponent.isAlive()) {
+            this.opponent = opponentAgents.get(1);
+        }
 
         PlayerAction act = new PlayerAction();
-        for (int i = 0; i < cnt; ++i) {
-            act.add(new BotAction(shooting, rotation, acceleration));
-        }
+
+        defineActions(act);
 
         JsonElement sol = new Gson().toJsonTree(act);
         return sol;
@@ -60,10 +60,18 @@ public class RunnerBot extends AbstractPlayer {
             double curY = object.getY();
 
             if (target != null) {
+
                 if (isStill(curX, curY)) {
                     return -0.5;
                 }
-                return 0.5;
+
+                if(me.getObject().getSpeed() > 2) {
+                    return -0.5;
+                }
+
+                if(me.getObject().getSpeed() < 1 ) {
+                    return 0.1;
+                }
             }
 
         }
@@ -110,7 +118,7 @@ public class RunnerBot extends AbstractPlayer {
     }
 
     protected boolean calculateShooting() {
-        return true;
+        return false;
     }
 
 
