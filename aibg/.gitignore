@@ -9,6 +9,7 @@
 .mtj.tmp/
 
 # Package Files #
+!asteroids.jar
 *.jar
 *.war
 *.ear
