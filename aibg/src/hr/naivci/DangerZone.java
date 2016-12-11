@@ -39,8 +39,8 @@ public class DangerZone {
 
             for (int k = 0; k < 10; k++) {
 
-                double axk = ax + k * asteroid.getVector().getI();
-                double ayk = ay + k * asteroid.getVector().getJ();
+                double axk = ax + k * asteroid.getVector().getI() * scale;
+                double ayk = ay + k * asteroid.getVector().getJ() * scale;
 
                 int xLeft = (int) Math.max(0.0, Math.floor((axk - asteroid.getRadius()) / scale));
                 int xRight = (int) Math.min(width, Math.ceil((axk + asteroid.getRadius()) / scale));
@@ -48,7 +48,7 @@ public class DangerZone {
                 int yDown = (int) Math.min(height, Math.ceil((ayk + asteroid.getRadius()) / scale));
 
                 for (int x = xLeft; x <= xRight; x++) {
-                    for (int y = yUp; y < yDown; y++) {
+                    for (int y = yUp; y <= yDown; y++) {
                         int oldValue = values.getOrDefault(x + "," + y, 0);
                         int newValue = 100 - (k * steps);
                         values.put(x + "," + y, oldValue > newValue ? oldValue : newValue);
@@ -74,8 +74,9 @@ public class DangerZone {
 
     protected String printValues() {
         StringBuilder sb = new StringBuilder();
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
+        // prvo po y pa po x
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 int value = values.getOrDefault(x + "," + y, 0);
                 sb.append(String.format("%3d ", value));
             }
