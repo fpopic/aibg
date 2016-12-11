@@ -8,9 +8,11 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+.idea
+.idea/
+.idea/*
+
 # Package Files #
-!asteroids.jar
-*.jar
 *.war
 *.ear
 
