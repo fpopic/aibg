@@ -15,6 +15,9 @@ public class RunnerBot extends BaseBot {
     private Agent me;
     private Agent opponent;
 
+
+    protected SearchableDangerZone dangerZone;
+
     public RunnerBot(String name) {
         super(name);
         this.setTarget(new Target(1700.0, 900.0));
@@ -34,6 +37,11 @@ public class RunnerBot extends BaseBot {
         GameState st = new Gson().fromJson(state, GameState.class);
 //        Thread.sleep(30);
 
+        int scale = 10;
+        int steps = 30;
+        int safetyLimit = 10;
+        dangerZone = new SearchableDangerZone(st, scale, steps, safetyLimit);
+
         defineAgents(st);
 
         this.opponent = opponentAgents.get(0);
@@ -47,6 +55,17 @@ public class RunnerBot extends BaseBot {
 
         JsonElement sol = new Gson().toJsonTree(act);
         return sol;
+    }
+
+    @Override
+    public void defineMe(int position) {
+        super.defineMe(position);
+
+        if(me != null && dangerZone != null && dangerZone.isInDangerous(me.getObject().getX(), me.getObject().getY())) {
+            SearchableDangerZone.Position pos = dangerZone.getClosestSafe(me.getObject().getX(), me.getObject().getY());
+            System.out.printf("New target for runner");
+            this.setTarget(new Target(pos.x, pos.y));
+        }
     }
 
     protected double calculateAcceleration() {

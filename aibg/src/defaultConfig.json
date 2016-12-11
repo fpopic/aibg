@@ -39,7 +39,7 @@
       ]
     },
     {
-      "type": "opponentChaser",
+      "type": "runner",
       "name": "p2-random",
       "timer":{
         "maxLength":60
