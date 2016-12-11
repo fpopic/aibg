@@ -13,6 +13,7 @@ import hr.best.ai.server.ProcessIOPlayer;
 import hr.best.ai.server.SocketIOPlayer;
 import hr.best.ai.server.TimeBucketPlayer;
 import hr.naivci.ChaserBot;
+import hr.naivci.DangerBot;
 import hr.naivci.RunnerBot;
 import org.apache.log4j.Logger;
 
@@ -29,7 +30,7 @@ import java.util.List;
  * Created by lpp on 12/7/15.
  */
 public class ConfigUtilities {
-    public static ServerSocket socket = null;
+    static ServerSocket socket = null;
 
     final static Logger logger = Logger.getLogger(ConfigUtilities.class);
 
@@ -48,6 +49,9 @@ public class ConfigUtilities {
             case "chaser":
                 player = new ChaserBot(name);
                 break;
+            case "danger":
+                player = new DangerBot(name);
+                break;
             case "runner":
                 player = new RunnerBot(name);
                 break;
@@ -62,7 +66,8 @@ public class ConfigUtilities {
                 if (playerConfiguration.has("workingDirectory")) {
                     player = new ProcessIOPlayer(command,
                             Paths.get(playerConfiguration.get("workingDirectory").getAsString()), name);
-                } else {
+                }
+                else {
                     player = new ProcessIOPlayer(command, name);
                 }
                 break;
@@ -78,7 +83,7 @@ public class ConfigUtilities {
         return player;
     }
 
-    public static State genInitState(JsonObject config) {
+    static State genInitState(JsonObject config) {
         Parameters params = Parameters.fromJson(config.getAsJsonObject("game"));
         List<List<Agent>> agents = agentsFromJson(config.getAsJsonArray("players"));
         List<GameObject> asteroids = asteroidsFromJson(config.getAsJsonArray("asteroids"));
@@ -119,13 +124,14 @@ public class ConfigUtilities {
         return sol;
     }
 
-    public static JsonObject configFromCMDArgs(String[] args) throws FileNotFoundException {
+    static JsonObject configFromCMDArgs(String[] args) throws FileNotFoundException {
         final JsonParser parser = new JsonParser();
 
         if (args.length == 0) {
             System.out.println("Falling back to default game configuration.");
             return parser.parse(new InputStreamReader(RunGame.class.getClassLoader().getResourceAsStream("defaultConfig.json"), StandardCharsets.UTF_8)).getAsJsonObject();
-        } else {
+        }
+        else {
             System.out.println("Using " + args[0] + " configuration file");
             return parser.parse(new FileReader(args[0])).getAsJsonObject();
         }
@@ -138,7 +144,8 @@ public class ConfigUtilities {
             config = new JsonParser().parse(new InputStreamReader(
                     ConfigUtilities.class.getClassLoader().getResourceAsStream("defaultConfig.json"),
                     StandardCharsets.UTF_8)).getAsJsonObject();
-        } else {
+        }
+        else {
             System.out.println("imported");
             config = new JsonParser().parse(message).getAsJsonObject();
         }
@@ -158,7 +165,7 @@ public class ConfigUtilities {
         return gc;
     }
 
-    public static List<AbstractPlayer> istantiateAllPlayersFromConfig(JsonArray playerConfigurations, int port)
+    static List<AbstractPlayer> istantiateAllPlayersFromConfig(JsonArray playerConfigurations, int port)
             throws Exception {
         List<AbstractPlayer> sol = new ArrayList<>();
 
