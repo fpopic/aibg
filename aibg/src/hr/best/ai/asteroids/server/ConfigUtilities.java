@@ -14,6 +14,7 @@ import hr.best.ai.server.SocketIOPlayer;
 import hr.best.ai.server.TimeBucketPlayer;
 import hr.naivci.ChaserBot;
 import hr.naivci.DangerBot;
+import hr.naivci.OpponentChaserBot;
 import hr.naivci.RunnerBot;
 import org.apache.log4j.Logger;
 
@@ -54,6 +55,9 @@ public class ConfigUtilities {
                 break;
             case "runner":
                 player = new RunnerBot(name);
+                break;
+            case "opponentChaser":
+                player = new OpponentChaserBot(name);
                 break;
             case "tcp":
                 socket = socket != null ? socket : new ServerSocket(port, 50, null);
