@@ -33,10 +33,10 @@ public class DangerZone {
         List<GameObject> asteroids = gameState.getAsteroids();
         List<GameObject> bullets = gameState.getBullets();
 
-        int padding = 8;
 
         asteroidsDangerZone(asteroids);
         bulletsDangerZone(bullets);
+
 //        List<Agent> enemyAgents = gameState.getAgents().get(1);
 //
 //        for (Agent agent : enemyAgents) {
@@ -45,21 +45,22 @@ public class DangerZone {
 
     }
 
-    private void asteroidsDangerZone(List<GameObject> asteroids) {
+    protected void asteroidsDangerZone(List<GameObject> asteroids) {
+        int padding = 6;
         for (GameObject asteroid : asteroids) {
 
             double ax = asteroid.getX();
             double ay = asteroid.getY();
 
-            for (int k = 0; k < 10; k++) {
+            for (int k = 0; k < steps; k++) {
 
                 double axk = ax + k * asteroid.getVector().getI() * scale;
                 double ayk = ay + k * asteroid.getVector().getJ() * scale;
 
-                int xLeft = (int) Math.max(0.0, Math.floor((axk - asteroid.getRadius()) / scale));
-                int xRight = (int) Math.min(width, Math.ceil((axk + asteroid.getRadius()) / scale));
-                int yUp = (int) Math.max(0.0, Math.floor((ayk - asteroid.getRadius()) / scale));
-                int yDown = (int) Math.min(height, Math.ceil((ayk + asteroid.getRadius()) / scale));
+                int xLeft = (int) Math.max(0.0, Math.floor((axk - asteroid.getRadius())/ scale) - padding);
+                int xRight = (int) Math.min(width, Math.ceil((axk + asteroid.getRadius())/ scale) + padding);
+                int yUp = (int) Math.max(0.0, Math.floor((ayk - asteroid.getRadius()) / scale) - padding);
+                int yDown = (int) Math.min(height, Math.ceil((ayk + asteroid.getRadius()) / scale) + padding);
 
                 for (int x = xLeft; x <= xRight; x++) {
                     for (int y = yUp; y <= yDown; y++) {
@@ -81,23 +82,24 @@ public class DangerZone {
 
     private void bulletsDangerZone(List<GameObject> bullets) {
 
+        int padding = 3;
         for (GameObject bullet : bullets) {
 
             double ax = bullet.getX();
             double ay = bullet.getY();
 
-            for (int k = 0; k < 10; k++) {
+            for (int k = 0; k < steps / 2; k++) {
 
                 double axk = ax + k * bullet.getVector().getI() * scale;
                 double ayk = ay + k * bullet.getVector().getJ() * scale;
 
-                int xLeft = (int) Math.max(0.0, Math.floor((axk - bullet.getRadius()) / scale));
-                int xRight = (int) Math.min(width, Math.ceil((axk + bullet.getRadius()) / scale));
-                int yUp = (int) Math.max(0.0, Math.floor((ayk - bullet.getRadius()) / scale));
-                int yDown = (int) Math.min(height, Math.ceil((ayk + bullet.getRadius()) / scale));
+                int xLeft = (int) Math.max(0.0, Math.floor((axk - bullet.getRadius()) / scale) - padding);
+                int xRight = (int) Math.min(width, Math.ceil((axk + bullet.getRadius()) / scale) + padding);
+                int yUp = (int) Math.max(0.0, Math.floor((ayk - bullet.getRadius()) / scale) - padding);
+                int yDown = (int) Math.min(height, Math.ceil((ayk + bullet.getRadius()) / scale) + padding);
 
-                for (int x = xLeft; x <= xRight + 6; x++) {
-                    for (int y = yUp; y <= yDown + 6; y++) {
+                for (int x = xLeft; x <= xRight; x++) {
+                    for (int y = yUp; y <= yDown; y++) {
                         int oldValue = values.getOrDefault(x + "," + y, 0);
                         int newValue = 100 - (k * steps);
                         values.put(x + "," + y, oldValue > newValue ? oldValue : newValue);

@@ -113,18 +113,18 @@ public class ChaserBot extends BaseBot {
     }
 
     protected boolean calculateShooting() {
-        return false;
-//        if (me != null) {
-//            GameObject object = this.me.getObject();
-//            double curX = object.getX();
-//            double curY = object.getY();
+//        return false;
+        if (me != null) {
+            GameObject object = this.me.getObject();
+            double curX = object.getX();
+            double curY = object.getY();
 
             // aim at the enemy
-//            double angleRadians = Math.atan2(opponent.getObject().getY() - curY, opponent.getObject().getX() - curX);
-//            return Math.abs(angleRadians - object.getAngle()) < 0.2;
-//        }
-//
-//        return false;
+            double angleRadians = Math.atan2(opponent.getObject().getY() - curY, opponent.getObject().getX() - curX);
+            return Math.abs(angleRadians - object.getAngle()) < 0.2;
+        }
+
+        return false;
     }
 
 

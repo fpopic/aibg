@@ -133,7 +133,7 @@ public class RunnerBot extends BaseBot {
     }
 
     protected boolean calculateShooting() {
-        return false;
+        return true;
     }
 
 

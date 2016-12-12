@@ -39,7 +39,7 @@
       ]
     },
     {
-      "type": "runner",
+      "type": "opponentChaser",
       "name": "p2-random",
       "timer":{
         "maxLength":60
@@ -52,7 +52,7 @@
             "y":200,
             "vector":{
               "i":-1,
-              "j":1
+              "j":0.5
             },
             "radius":24},
           "turnsUntilShooting":10
@@ -64,7 +64,7 @@
             "y":880,
             "vector":{
               "i":-1,
-              "j":-1
+              "j":-0.5
             },
             "radius":24},
           "turnsUntilShooting":10
@@ -83,29 +83,20 @@
         "i":0,
         "j":-1
       },
-      "radius":130
-    },
-    {
-      "x":200,
-      "y":540,
-      "vector":{
-        "i":2,
-        "j":2
-      },
-      "radius":60
-    },
-    {
-      "x":1720,
-      "y":540,
-      "vector":{
-        "i":-2,
-        "j":-2
-      },
-      "radius":60
+      "radius":10
     },
     {
       "x":960,
       "y":200,
+      "vector":{
+        "i":-2,
+        "j":-2
+      },
+      "radius":40
+    },
+    {
+      "x":360,
+      "y":500,
       "vector":{
         "i":-2,
         "j":-2
