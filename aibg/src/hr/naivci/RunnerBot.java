@@ -61,8 +61,8 @@ public class RunnerBot extends BaseBot {
         super.defineMe(position);
 
         if(me != null && dangerZone != null && dangerZone.isInDangerous(me.getObject().getX(), me.getObject().getY())) {
-            SearchableDangerZone.Position pos = dangerZone.getClosestSafe(me.getObject().getX(), me.getObject().getY());
-            System.out.printf("New target for runner");
+            SearchableDangerZone.Position pos = dangerZone.getClosestSafe(
+                    me.getObject().getX(), me.getObject().getY(), me.getObject().getVector().getI(), me.getObject().getVector().getJ());
             this.setTarget(new Target(pos.x, pos.y));
         }
     }

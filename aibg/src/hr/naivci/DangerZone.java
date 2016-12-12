@@ -32,20 +32,22 @@ public class DangerZone {
     protected void calculateDangerZone() {
         List<GameObject> asteroids = gameState.getAsteroids();
 
+        int padding = 8;
+
         for (GameObject asteroid : asteroids) {
 
             double ax = asteroid.getX();
             double ay = asteroid.getY();
 
-            for (int k = 0; k < 10; k++) {
+            for (int k = 0; k < steps; k++) {
 
                 double axk = ax + k * asteroid.getVector().getI() * scale;
                 double ayk = ay + k * asteroid.getVector().getJ() * scale;
 
-                int xLeft = (int) Math.max(0.0, Math.floor((axk - asteroid.getRadius()) / scale));
-                int xRight = (int) Math.min(width, Math.ceil((axk + asteroid.getRadius()) / scale));
-                int yUp = (int) Math.max(0.0, Math.floor((ayk - asteroid.getRadius()) / scale));
-                int yDown = (int) Math.min(height, Math.ceil((ayk + asteroid.getRadius()) / scale));
+                int xLeft = (int) Math.max(0.0, Math.floor((axk - asteroid.getRadius()) / scale) - padding);
+                int xRight = (int) Math.min(width, Math.ceil((axk + asteroid.getRadius()) / scale) + padding);
+                int yUp = (int) Math.max(0.0, Math.floor((ayk - asteroid.getRadius()) / scale) - padding);
+                int yDown = (int) Math.min(height, Math.ceil((ayk + asteroid.getRadius()) / scale) + padding);
 
                 for (int x = xLeft; x <= xRight; x++) {
                     for (int y = yUp; y <= yDown; y++) {

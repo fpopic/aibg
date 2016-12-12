@@ -43,8 +43,8 @@ public abstract class BaseBot extends AbstractPlayer {
         int cnt = myAgents.size();
 
         for (int i = 0; i < cnt; ++i) {
-            defineOpponent(i);
             defineMe(i);
+            defineOpponent(i);
 
             boolean shooting = calculateShooting();
             double rotation = calculateRotation();

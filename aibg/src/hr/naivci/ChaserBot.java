@@ -35,15 +35,13 @@ public class ChaserBot extends BaseBot {
         GameState st = new Gson().fromJson(state, GameState.class);
 
         int scale = 10;
-        int steps = 30;
-        int safetyLimit = 10;
+        int steps = 20;
+        int safetyLimit = 20;
         dangerZone = new SearchableDangerZone(st, scale, steps, safetyLimit);
 
 //        Thread.sleep(60);
 
         defineAgents(st);
-
-        this.me = myAgents.get(0);
 
         PlayerAction act = new PlayerAction();
 
@@ -59,7 +57,8 @@ public class ChaserBot extends BaseBot {
 //        super.defineOpponent(position);
 
         if(dangerZone != null && (dangerZone.isInDangerous(me.getObject().getX(), me.getObject().getY()))) {
-            SearchableDangerZone.Position pos = dangerZone.getClosestSafe(me.getObject().getX(), me.getObject().getY());
+            SearchableDangerZone.Position pos = dangerZone.getClosestSafe(
+                    me.getObject().getX(), me.getObject().getY(), me.getObject().getVector().getI(), me.getObject().getVector().getJ());
                 setTarget(new Target(pos.x, pos.y));
         } else {
             setTarget(new Target(opponent.getObject().getX(), opponent.getObject().getY()));
@@ -70,8 +69,18 @@ public class ChaserBot extends BaseBot {
 
         if (me != null) {
             if (target != null) {
+                if(dangerZone != null
+                        && dangerZone.isInDangerous(
+                        me.getObject().getX(),
+                        me.getObject().getY()) ) {
+                    if(me.getObject().getSpeed() < 4) {
+                        return 0.5;
+                    } else {
+                        return -0.1;
+                    }
+                }
 
-                if(me.getObject().getSpeed() > 2) {
+                if(me.getObject().getSpeed() > 3) {
                     return -0.5;
                 }
 
@@ -104,17 +113,18 @@ public class ChaserBot extends BaseBot {
     }
 
     protected boolean calculateShooting() {
-        if (me != null) {
-            GameObject object = this.me.getObject();
-            double curX = object.getX();
-            double curY = object.getY();
+        return false;
+//        if (me != null) {
+//            GameObject object = this.me.getObject();
+//            double curX = object.getX();
+//            double curY = object.getY();
 
             // aim at the enemy
-            double angleRadians = Math.atan2(opponent.getObject().getY() - curY, opponent.getObject().getX() - curX);
-            return Math.abs(angleRadians - object.getAngle()) < 0.3;
-        }
-
-        return false;
+//            double angleRadians = Math.atan2(opponent.getObject().getY() - curY, opponent.getObject().getX() - curX);
+//            return Math.abs(angleRadians - object.getAngle()) < 0.2;
+//        }
+//
+//        return false;
     }
 
 
