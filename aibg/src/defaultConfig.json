@@ -1,7 +1,7 @@
 {
   "players": [
     {
-      "type": "chaser",
+      "type": "process",
       "name": "danger-bot",
       "timer":{
         "maxLength":60
@@ -10,8 +10,8 @@
         {
           "alive": true,
           "object":{
-            "x":200,
-            "y":200,
+            "x":400,
+            "y":400,
             "vector":{
               "i":1,
               "j":1
@@ -23,7 +23,7 @@
         {
           "alive": true,
           "object":{
-            "x":200,
+            "x":400,
             "y":880,
             "vector":{
               "i":1,
@@ -35,11 +35,11 @@
         }
       ],
       "command": [
-        "demo-bindings/java-bindings/run"
+        "aibg/production/aibg/lib/demo-bindings/java-bindings/run"
       ]
     },
     {
-      "type": "opponentChaser",
+      "type": "random",
       "name": "p2-random",
       "timer":{
         "maxLength":60
@@ -83,7 +83,7 @@
         "i":0,
         "j":-1
       },
-      "radius":10
+      "radius":130
     },
     {
       "x":960,

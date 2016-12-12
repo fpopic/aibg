@@ -36,7 +36,7 @@ public class ChaserBot extends BaseBot {
 
         int scale = 10;
         int steps = 20;
-        int safetyLimit = 20;
+        int safetyLimit = 10;
         dangerZone = new SearchableDangerZone(st, scale, steps, safetyLimit);
 
 //        Thread.sleep(60);
@@ -69,11 +69,8 @@ public class ChaserBot extends BaseBot {
 
         if (me != null) {
             if (target != null) {
-                if(dangerZone != null
-                        && dangerZone.isInDangerous(
-                        me.getObject().getX(),
-                        me.getObject().getY()) ) {
-                    if(me.getObject().getSpeed() < 4) {
+                if(dangerZone != null && dangerZone.isInDangerous(me.getObject().getX(), me.getObject().getY()) ) {
+                    if(me.getObject().getSpeed() < 5) {
                         return 0.5;
                     } else {
                         return -0.1;
@@ -113,15 +110,15 @@ public class ChaserBot extends BaseBot {
     }
 
     protected boolean calculateShooting() {
-//        return false;
+//        return true;
         if (me != null) {
             GameObject object = this.me.getObject();
             double curX = object.getX();
             double curY = object.getY();
-
-            // aim at the enemy
+//
+//            // aim at the enemy
             double angleRadians = Math.atan2(opponent.getObject().getY() - curY, opponent.getObject().getX() - curX);
-            return Math.abs(angleRadians - object.getAngle()) < 0.2;
+            return Math.abs(angleRadians - object.getAngle()) < 0.3;
         }
 
         return false;
