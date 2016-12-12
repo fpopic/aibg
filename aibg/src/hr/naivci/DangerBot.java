@@ -36,8 +36,9 @@ public class DangerBot extends AbstractPlayer {
         final int scale = 10;
         final int steps = 10;
 
-//        DangerZone dangerZone = new DangerZone(gameState, scale, steps);
-//        IOManager.writeText(dangerZone.printValues(), "fajl.txt");
+        DangerZone dangerZone = new DangerZone(gameState, scale, steps);
+        if (iteracija == 80)
+            IOManager.writeText(dangerZone.printValues(), "fajl.txt");
 
         PlayerAction act = new PlayerAction();
         for (int i = 0; i < cnt; ++i) {

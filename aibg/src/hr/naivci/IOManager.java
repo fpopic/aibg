@@ -8,7 +8,7 @@ public class IOManager {
 
     public static void writeText(String text, String filePath) {
         try {
-            String folderPath = "generated/";
+            String folderPath = "production/";
             BufferedWriter bw = new BufferedWriter(new FileWriter(folderPath + filePath));
             bw.write(text);
             bw.close();
