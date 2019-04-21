@@ -1,0 +1,14 @@
+hr/best/ai/asteroids/utility/PlayerAction.class
+hr/best/ai/asteroids/bot/BaseBot.class
+hr/best/ai/asteroids/utility/GameObject.class
+hr/best/ai/asteroids/utility/BotAction.class
+hr/best/ai/asteroids/utility/Parameters.class
+hr/best/ai/asteroids/naivci/DangerZone.class
+hr/best/ai/asteroids/bot/ChaserBot.class
+hr/best/ai/asteroids/bot/ChaserBot$Target.class
+hr/best/ai/asteroids/naivci/SearchableDangerZone.class
+hr/best/ai/asteroids/bot/Program.class
+hr/best/ai/asteroids/utility/Vector.class
+hr/best/ai/asteroids/utility/GameState.class
+hr/best/ai/asteroids/naivci/SearchableDangerZone$Position.class
+hr/best/ai/asteroids/utility/Agent.class
